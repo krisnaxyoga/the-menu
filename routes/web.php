@@ -26,4 +26,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/product',\App\Http\Controllers\Admin\ProductController::class);
     Route::resource('/table',\App\Http\Controllers\Admin\tableController::class);
     Route::resource('/category',\App\Http\Controllers\Admin\CategoryController::class);
+    Route::get('/order',[\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('order.index');
+    Route::get('/customer',[\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customer.index');
 });

@@ -70,15 +70,15 @@
                             <div class="nav-link-icon"><i data-feather="git-merge"></i></div>
                             category Product
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('product.index') }}">
                             <div class="nav-link-icon"><i data-feather="box"></i></div>
                             Product
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('table.index') }}">
                             <div class="nav-link-icon"><i data-feather="command"></i></div>
                             table
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('order.index') }}">
                             <div class="nav-link-icon"><i data-feather="bookmark"></i></div>
                             order
                         </a>
@@ -86,7 +86,7 @@
                             <div class="nav-link-icon"><i data-feather="book"></i></div>
                             report
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('customer.index') }}">
                             <div class="nav-link-icon"><i data-feather="users"></i></div>
                             customers
                         </a>

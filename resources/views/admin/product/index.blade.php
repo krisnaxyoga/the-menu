@@ -7,7 +7,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h2>category table</h2>
+                    <h2>Product table</h2>
                 </div>
                 <div class="card-body">
                     <a href="{{ route('product.create') }}" class="btn btn-primary mb-2">add</a>
