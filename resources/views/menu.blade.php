@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'welcome')
+@section('title', 'login')
 @section('content')
 
 <section>
@@ -17,7 +17,7 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                         @if (session()->has('error'))
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             {{ session('error') }}
@@ -25,7 +25,7 @@
                                         </div>
                                     @endif
                                     </div>
-                                    <form class="user"  method="post" action="{{ route('customer') }}">
+                                    <form class="user"  method="post" action="{{ route('dologin') }}">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror"
