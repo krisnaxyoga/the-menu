@@ -114,9 +114,9 @@ class ProductController extends Controller
                 if ($request->hasFile('image')) {
                     $image = $request->file('image');
         
-                    if (File::exists(public_path($post->image))) 
+                    if (File::exists(public_path($post->image_url))) 
                     {
-                        File::delete(public_path($post->image));
+                        File::delete(public_path($post->image_url));
                     }
                     $filename = time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('images'), $filename);
@@ -125,7 +125,8 @@ class ProductController extends Controller
                 }
                 $image = "/images/".$filename;
             }else{
-                $image = $post->image;
+                $image = $post->image_url;
+                $filename = $post->image_name;
             }
             }
             $iduser = auth()->user()->id;
@@ -151,5 +152,13 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+
+        $post = Product::find($id);
+        if (File::exists(public_path($post->image_url))) 
+            {
+                File::delete(public_path($post->image_url));
+            }
+        $post->delete();
+        return redirect()->back()->with('message', 'berita berhasil dihapus');
     }
 }

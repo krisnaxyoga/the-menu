@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Table;
+
+use Illuminate\Support\Facades\Validator;
 
 class TableController extends Controller
 {
@@ -12,7 +15,9 @@ class TableController extends Controller
      */
     public function index()
     {
-        //
+        $table = Table::all();
+
+        return view('admin.table.index',compact('table'));
     }
 
     /**
@@ -20,7 +25,9 @@ class TableController extends Controller
      */
     public function create()
     {
-        //
+        $model = new Table;
+        
+        return view('admin.table.form', compact('model'));
     }
 
     /**
@@ -28,7 +35,25 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'table_number' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput($request->all());
+        } else {
+            $data = new Table();
+            $data->user_id = auth()->user()->id;
+            $data->table_number = $request->table_number;
+            $data->save();
+
+            return redirect()
+                ->route('table.index')
+                ->with('message', 'Data berhasil disimpan.');
+        }
     }
 
     /**
@@ -44,7 +69,9 @@ class TableController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $model = Table::find($id);
+
+        return view('admin.table.form',compact('model'));
     }
 
     /**
@@ -52,9 +79,29 @@ class TableController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'table_number' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput($request->all());
+        } else {
+            $data = Table::find($id);
+            $data->user_id = auth()->user()->id;
+            $data->table_number = $request->table_number;
+            $data->save();
+
+            return redirect()
+                ->route('table.index')
+                ->with('message', 'Data berhasil disimpan.');
+        }
+
     }
 
+    
     /**
      * Remove the specified resource from storage.
      */

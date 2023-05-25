@@ -17,7 +17,7 @@ Route::group(['middleware' => 'guest'], function() {
     Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('dologin');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    
+    Route::get('/customer/create/{table}',[\App\Http\Controllers\Admin\CustomerController::class, 'create'])->name('customer.create');
 });
 
 Route::group(['middleware' => ['auth']], function() {
@@ -28,4 +28,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/category',\App\Http\Controllers\Admin\CategoryController::class);
     Route::get('/order',[\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('order.index');
     Route::get('/customer',[\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customer.index');
+   
 });

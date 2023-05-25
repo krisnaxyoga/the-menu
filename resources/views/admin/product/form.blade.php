@@ -26,9 +26,7 @@
                         <div class="form-group">
                             <?php if(old('image_name', $model->image_name) !== null){ ?>
                             <img src="{{ $model->image_url }}" class="img-fluid" style="width:200px;height:150px" alt=""/>
-                            <?php }else{
-                                ''
-                            }  ?>
+                            <?php } ?>
                             <label class="small mb-1">image<span class="text-danger">*</span></label>
                             <input class="form-control form-control-solid" name="image" type="file" placeholder="Name" value="{{ old('image_name', $model->image_name) }}" />
                         </div>

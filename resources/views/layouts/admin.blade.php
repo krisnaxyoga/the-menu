@@ -18,7 +18,7 @@
   </head>
   <body>
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
-        <a class="navbar-brand h-100 text-truncate" href="#">
+        <a class="navbar-brand h-100 text-truncate" href="{{ route('home') }}">
             <img class="img-fluid" src="/images/logo.png"/>
              Dashboard Admin
         </a>
@@ -62,7 +62,7 @@
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
                         <div class="sidenav-menu-heading">Main</div>
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" href="{{ route('home') }}">
                             <div class="nav-link-icon"><i data-feather="activity"></i></div>
                             Dashboard
                         </a>
