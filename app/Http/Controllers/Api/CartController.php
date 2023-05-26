@@ -8,6 +8,9 @@ use App\Models\Product;
 
 class CartController extends Controller
 {
+    // public function getcart(){
+    //     session()->get('data');
+    // }
     public function addToCart(Request $request)
     {
         $productId = $request->id;
@@ -46,7 +49,7 @@ class CartController extends Controller
         // Perbarui jumlah produk dalam keranjang (session atau tabel database)
         // Sesuaikan logika ini dengan metode penyimpanan yang Anda gunakan
         // Misalnya, jika menggunakan session:
-        $cart = session()->get('cart', []);
+        $cart = session()->get('cart',);
         if (isset($cart[$productId])) {
             $cart[$productId]['quantity'] = $quantity;
             session()->put('cart', $cart);
