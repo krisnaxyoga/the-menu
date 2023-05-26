@@ -2,7 +2,7 @@
 @section('title', 'dashboard')
 @section('content')
 <section>
-    <div class="container">
+    {{-- <div class="container">
         <div class="row">
             <div class="col-lg-4">
                 <div class="card bg-primary">
@@ -18,6 +18,6 @@
                 
             </div>
         </div>
-    </div>
+    </div> --}}
 </section>
 @endsection

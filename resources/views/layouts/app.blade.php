@@ -16,7 +16,7 @@
     {{-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></script> --}}
 
     @stack('style')
-    <title>Login</title>
+    {{-- <title>Login</title> --}}
   </head>
   <body>
   

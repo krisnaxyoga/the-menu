@@ -20,6 +20,7 @@ Route::group(['middleware' => 'guest'], function() {
     Route::get('/menu/{table}', [\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('menu');
     Route::post('/customer/store',[\App\Http\Controllers\Admin\CustomerController::class, 'store'])->name('customer.store');
     Route::get('/food/{table}',[\App\Http\Controllers\MenuController::class, 'index'])->name('menu.food');
+    Route::get('/cart/{table}',[\App\Http\Controllers\MenuController::class, 'cart'])->name('cart');
   
 });
 
