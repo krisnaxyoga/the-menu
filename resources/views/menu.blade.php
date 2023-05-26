@@ -15,17 +15,22 @@
                                 <div>
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 mt-3">Welcome The Menu</h1>
-                                        <p id="p1">This is a paragraph.</p>
                                         @if (session()->has('message'))
                                         <div class="alert alert-primary alert-dismissible fade show" role="alert">
                                             {{ session('message') }}
                                         </div>
                                     @endif
+                                    <div id="cart">
+                                        <h2>Shopping Cart</h2>
+                                        <ul id="cart-items">
+                                          <!-- Daftar item keranjang akan ditampilkan di sini -->
+                                        </ul>
+                                      </div>   
                                     </div>
                                     <div class="container">
                                         <div class="row justify-content-center" id="products">
                                             @foreach ($data as $key=>$item)
-                                                <div class="col-lg-4 col-md-6 col-12 mb-5" id="cart-items">
+                                                <div class="col-lg-4 col-md-6 col-12 mb-5">
                                                     <div class="card">
                                                         <img class="card-img-top object-fit-cover height-13rem" src="{{$item->image_url}}" alt="{{$item->image_url}}">
                                                         <div class="card-body">
@@ -68,70 +73,76 @@
                         </div>
                     </div>
                 </div>
-                <div id="cart">
-                    <h2>Shopping Cart</h2>
-                    <ul id="cart-items">
-                      <!-- Daftar item keranjang akan ditampilkan di sini -->
-                    </ul>
-                  </div>                
+                             
     </div>
 </section>
 <script>
     $(document).ready(function() {
-        // Menangani tombol "Add to Cart"
-            $(".add-to-cart").click(function() {
-                var productId = $(this).data("id");
-                
-                // Mengirim permintaan AJAX untuk menambahkan produk ke keranjang
-                $.ajax({
-                url: "/add-to-cart",
-                method: "POST",
-                data: {id: productId},
-                success: function(response) {
-                    // Memperbarui tampilan keranjang setelah produk ditambahkan
-                    updateCartView(response);
-                }
-                });
-            });
+         // Menangani tombol "Add to Cart"
+        $(".add-to-cart").click(function() {
+            var productId = $(this).data("id");
             
-            // Menangani tombol "Update Cart"
-            $("#cart-items").on("click", ".update-cart", function() {
-                var productId = $(this).data("id");
-                var quantity = $(this).siblings(".quantity").val();
-                
-                // Mengirim permintaan AJAX untuk memperbarui jumlah produk dalam keranjang
-                $.ajax({
-                url: "/update-cart",
-                method: "POST",
-                data: {id: productId, quantity: quantity},
-                success: function(response) {
-                    // Memperbarui tampilan keranjang setelah jumlah produk diperbarui
-                    updateCartView(response);
-                }
-                });
+            // Mengirim permintaan AJAX untuk menambahkan produk ke keranjang
+            $.ajax({
+            url: "/api/add-to-cart",
+            method: "POST",
+            data: {id: productId},
+            success: function(response) {
+                // Memperbarui tampilan keranjang setelah produk ditambahkan
+                updateCartView(response);
+            }
             });
+        });
+        
+        // Menangani tombol "Update Cart"
+        $("#cart-items").on("click", ".update-cart", function() {
+            var productId = $(this).data("id");
+            var quantity = $(this).siblings(".quantity").val();
+            console.log(quantity,">>>>QTY")
+            // Mengirim permintaan AJAX untuk memperbarui jumlah produk dalam keranjang
+            $.ajax({
+            url: "/api/update-cart",
+            method: "POST",
+            data: {id: productId, quantity: quantity},
+            success: function(response) {
+                console.log(response,"response>>>>")
+                // Memperbarui tampilan keranjang setelah jumlah produk diperbarui
+                updateCartView(response);
+            }
+            });
+        });
+        
+        // Menangani tombol "Remove from Cart"
+        $("#cart-items").on("click", ".remove-from-cart", function() {
+            var productId = $(this).data("id");
             
-            // Menangani tombol "Remove from Cart"
-            $("#cart-items").on("click", ".remove-from-cart", function() {
-                var productId = $(this).data("id");
-                
-                // Mengirim permintaan AJAX untuk menghapus produk dari keranjang
-                $.ajax({
-                url: "/remove-from-cart",
-                method: "POST",
-                data: {id: productId},
-                success: function(response) {
-                    // Memperbarui tampilan keranjang setelah produk dihapus
-                    updateCartView(response);
-                }
-                });
+            // Mengirim permintaan AJAX untuk menghapus produk dari keranjang
+            $.ajax({
+            url: "/api/remove-from-cart",
+            method: "POST",
+            data: {id: productId},
+            success: function(response) {
+                // Memperbarui tampilan keranjang setelah produk dihapus
+                updateCartView(response);
+            }
             });
+        });
             
             // Memperbarui tampilan keranjang
             function updateCartView(cart) {
+                console.log(cart?.cart,">>>>>>CART DALAM VIEW");
+
+                // var fruits = ['Apple', 'Banana', 'Orange'];
+
+                // console.log(fruits,">>>PRUID")
+                // $.each(fruits, function(index, fruit) {
+                // console.log(index, fruit, ">>>>>>FRUIT EACH");
+                // });
+
                 $("#cart-items").html("");
-                $.each(cart.items, function(index, item) {
-                var cartItem = $("<li>").html(item.name + " - $" + item.price + " x " + item.quantity);
+                $.each(cart?.cart, function(index, item) {
+                    console.log(item.name,">>>>ITEM NAME")
+                var cartItem = $("<li>").html(item.name + " - IDR" + item.price + " x " + item.quantity);
                 var updateButton = $("<button>").addClass("update-cart").text("Update");
                 var removeButton = $("<button>").addClass("remove-from-cart").text("Remove");
                 var quantityInput = $("<input>").addClass("quantity").attr("type", "number").val(item.quantity);

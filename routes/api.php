@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('/add-to-cart',[\App\Http\Controllers\Api\CartController::class, 'addToCart'])->name('addtocart');
+Route::post('/update-cart',[\App\Http\Controllers\Api\CartController::class, 'updateCart'])->name('updatecart');
+Route::post('/remove-from-cart',[\App\Http\Controllers\Api\CartController::class, 'removeFromCart'])->name('removecart');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
