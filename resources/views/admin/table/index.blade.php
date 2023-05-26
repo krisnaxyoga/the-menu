@@ -26,7 +26,7 @@
                                     <td>{{ $item->table_number }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td><a href="{{ route('table.edit',$item->id) }}" class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="edit"></i></a>
-                                        <a href="{{ route('table.edit',$item->id) }}" class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class='fas fa-qrcode'></i></a>
+                                        <a href="{{ route('createmenu',$item->id) }}" class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i class='fas fa-qrcode'></i></a>
                                     
                                         <form class="d-inline" action="{{route('table.destroy', $item->id)}}" method="POST" onSubmit="return confirm('Apakah anda yakin akan menghapus data ini?');">
                                             @csrf

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Table;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Validator;
 
 class TableController extends Controller
@@ -107,6 +107,18 @@ class TableController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Table::find($id);
+       
+        $post->delete();
+        return redirect()->back()->with('message', 'Data berhasil dihapus');
+    }
+
+    public function createmenu(Request $request,$table)
+    {
+        $post = Table::where('id',$table)->get();
+        $url = url('/menu/'.$post[0]->table_number); 
+        return view('admin.table.qrmenu',compact('url'));
+        // $qrCode = QrCode::format('png')->size(200)->generate($url);
+        // return response($qrCode)->header('Content-Type', 'image/png');
     }
 }

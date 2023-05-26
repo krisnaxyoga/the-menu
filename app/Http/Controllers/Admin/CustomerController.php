@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Customer;
+use App\Models\Table;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($table)
     {
-        //
+        // dd($table);
+        return view('welcome',compact('table'));
     }
 
     /**
@@ -28,7 +32,28 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $table = Table::where('table_number',$request->table_number)->get();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        // dd($table[0]->id);
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput($request->all());
+        } else {
+            $data = new Customer();
+            $data->name = $request->name;
+            $data->table_id = $table[0]->id;
+            $data->phone = $request->phone;
+            $data->save();
+
+            return redirect()
+                ->route('menu.food',$request->table_number)
+                ->with('message', 'Reservation Success.');
+        }
     }
 
     /**

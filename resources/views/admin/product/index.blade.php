@@ -27,8 +27,8 @@
                                 <tr>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->price }}</td>
-                                    <td>{{ $item->category_id }}</td>
-                                    <td>{{ $item->description }}</td>
+                                    <td>{{ $item->categoryproduct->name }}</td>
+                                    <td class="elipsis"> {{ $item->description }}</td>
                                     <td><a href="{{ route('product.edit',$item->id) }}" class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="edit"></i></a>
                                     
                                         <form class="d-inline" action="{{route('product.destroy', $item->id)}}" method="POST" onSubmit="return confirm('Apakah anda yakin akan menghapus data ini?');">

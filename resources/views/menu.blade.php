@@ -1,75 +1,145 @@
 @extends('layouts.app')
 @section('title', 'login')
 @section('content')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <section>
     <div class="container">
 
         <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-lg-6 col-md-12">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="p-5">
+                                <div>
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                                        @if (session()->has('error'))
-                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            {{ session('error') }}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        <h1 class="h4 text-gray-900 mb-4 mt-3">Welcome The Menu</h1>
+                                        <p id="p1">This is a paragraph.</p>
+                                        @if (session()->has('message'))
+                                        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                            {{ session('message') }}
                                         </div>
                                     @endif
                                     </div>
-                                    <form class="user"  method="post" action="{{ route('dologin') }}">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                                @error('email')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                              @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user @error('password') is-invalid @enderror"
-                                                id="exampleInputPassword" placeholder="Password">
-                                                @error('password')
-                                                    <div class="invalid-feedback">
-                                                        {{ $message }}
+                                    <div class="container">
+                                        <div class="row justify-content-center" id="products">
+                                            @foreach ($data as $key=>$item)
+                                                <div class="col-lg-4 col-md-6 col-12 mb-5" id="cart-items">
+                                                    <div class="card">
+                                                        <img class="card-img-top object-fit-cover height-13rem" src="{{$item->image_url}}" alt="{{$item->image_url}}">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{$item->name}}</h5>
+                                                            <p class="card-text">{{ $item->categoryproduct->name }}</p>
+                                                            <p>{{$item->price}}</p>
+                                                            <input type="text" hidden value="{{ $item->description }}" id="desc">
+                                                            <button data-id="{{$item->id}}" data-price="{{$item->price}}" data-name="{{$item->name}}" class="btn btn-primary add-to-cart"><i data-feather="shopping-cart"></i></button>
+                                                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal-{{ $item->id }}">
+                                                                <i data-feather="eye"></i>
+                                                              </button>
+                                                            {{-- <a href="#" class="btn btn-warning" onclick="alert('@php $jangkrik @endphp')"><i data-feather="eye"></i></a> --}}
+                                                        <!-- Tombol untuk memicu modal -->
+
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="modal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-{{ $item->id }}-label" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                    <h5 class="modal-title" id="modal-{{ $item->id }}-label">{{$item->name}}</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                    <!-- Konten modal di sini -->
+                                                                    <p>{{ $item->description }}</p>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                @enderror
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input " id="customCheck">
-                                                
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </button>
-                                        
-                                    </form>
-                                    <hr>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </div>
-
-        </div>
-
+                <div id="cart">
+                    <h2>Shopping Cart</h2>
+                    <ul id="cart-items">
+                      <!-- Daftar item keranjang akan ditampilkan di sini -->
+                    </ul>
+                  </div>                
     </div>
 </section>
+<script>
+    $(document).ready(function() {
+        // Menangani tombol "Add to Cart"
+            $(".add-to-cart").click(function() {
+                var productId = $(this).data("id");
+                
+                // Mengirim permintaan AJAX untuk menambahkan produk ke keranjang
+                $.ajax({
+                url: "/add-to-cart",
+                method: "POST",
+                data: {id: productId},
+                success: function(response) {
+                    // Memperbarui tampilan keranjang setelah produk ditambahkan
+                    updateCartView(response);
+                }
+                });
+            });
+            
+            // Menangani tombol "Update Cart"
+            $("#cart-items").on("click", ".update-cart", function() {
+                var productId = $(this).data("id");
+                var quantity = $(this).siblings(".quantity").val();
+                
+                // Mengirim permintaan AJAX untuk memperbarui jumlah produk dalam keranjang
+                $.ajax({
+                url: "/update-cart",
+                method: "POST",
+                data: {id: productId, quantity: quantity},
+                success: function(response) {
+                    // Memperbarui tampilan keranjang setelah jumlah produk diperbarui
+                    updateCartView(response);
+                }
+                });
+            });
+            
+            // Menangani tombol "Remove from Cart"
+            $("#cart-items").on("click", ".remove-from-cart", function() {
+                var productId = $(this).data("id");
+                
+                // Mengirim permintaan AJAX untuk menghapus produk dari keranjang
+                $.ajax({
+                url: "/remove-from-cart",
+                method: "POST",
+                data: {id: productId},
+                success: function(response) {
+                    // Memperbarui tampilan keranjang setelah produk dihapus
+                    updateCartView(response);
+                }
+                });
+            });
+            
+            // Memperbarui tampilan keranjang
+            function updateCartView(cart) {
+                $("#cart-items").html("");
+                $.each(cart.items, function(index, item) {
+                var cartItem = $("<li>").html(item.name + " - $" + item.price + " x " + item.quantity);
+                var updateButton = $("<button>").addClass("update-cart").text("Update");
+                var removeButton = $("<button>").addClass("remove-from-cart").text("Remove");
+                var quantityInput = $("<input>").addClass("quantity").attr("type", "number").val(item.quantity);
+                cartItem.append(quantityInput, updateButton, removeButton);
+                $("#cart-items").append(cartItem);
+                });
+            }
+        });
+    </script>
+    
 @endsection
