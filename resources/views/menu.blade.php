@@ -36,10 +36,11 @@
                                                             <h5 class="card-title">{{$item->name}}</h5>
                                                             <p class="card-text">{{ $item->categoryproduct->name }}</p>
                                                             <p>{{$item->price}}</p>
-                                                            <button data-id="{{$item->id}}" data-price="{{$item->price}}" data-name="{{$item->name}}" class="btn btn-primary add-to-cart"><i data-feather="shopping-cart"></i></button>
+                                                            <button data-id="{{$item->id}}" data-price="{{$item->price}}" data-name="{{$item->name}}" class="btn btn-primary add-to-cart"><i data-feather="plus"></i></button>
                                                             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal-{{ $item->id }}">
                                                                 <i data-feather="eye"></i>
                                                               </button>
+                                                              <span class="jumlah-{{ $item->id }}" data-id="{{$item->id}}"></span>
                                                             {{-- <a href="#" class="btn btn-warning" onclick="alert('@php $jangkrik @endphp')"><i data-feather="eye"></i></a> --}}
                                                         <!-- Tombol untuk memicu modal -->
 
@@ -105,7 +106,8 @@
         console.log('Jumlah data dalam localStorage: ' + itemCount);
 
         $("#nilai").text(itemCount);
-
+        
+       
     // Fungsi untuk menambahkan produk ke keranjang
     $('.add-to-cart').on('click', function() {
         var productId = $(this).data('id');
@@ -115,8 +117,34 @@
         var cartItems = localStorage.getItem('cartItems');
         cartItems = cartItems ? JSON.parse(cartItems) : [];
 
-        // Tambahkan ID produk ke dalam keranjang
-        cartItems.push({id:productId,price:price,name:name});
+        // // Tambahkan ID produk ke dalam keranjang
+        // cartItems.push({id:productId,price:price,name:name});
+            
+        // Mengecek apakah item sudah ada di keranjang
+        var existingItem = cartItems.find(function(item) {
+            return item.productId === productId;
+        });
+
+        if (existingItem) {
+            // Jika item sudah ada, tambahkan kuantitasnya
+            existingItem.qty += 1;
+            
+        alert('Jumlah Produk = '+existingItem.qty);
+        } else {
+            // Jika item belum ada, tambahkan item baru ke keranjang
+            var newItem = {
+            productId: productId,
+            price:price,
+            name:name,
+            qty: 1
+            };
+            cartItems.push(newItem);
+            
+        alert('Produk berhasil ditambahkan ke keranjang.');
+        }
+
+        // Menyimpan keranjang yang telah diperbarui di localStorage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
         // Simpan kembali data keranjang ke localStorage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -124,27 +152,7 @@
         console.log('Jumlah data dalam localStorage: ' + itemCount);
 
         $("#nilai").text(itemCount);
-        console.log('Produk berhasil ditambahkan ke keranjang.');
-        // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
-    });
 
-    // Fungsi untuk menghapus produk dari keranjang
-    $('.remove-from-cart').on('click', function() {
-        var productId = $(this).data('id');
-        
-        // Ambil data keranjang dari localStorage
-        var cartItems = localStorage.getItem('cartItems');
-        cartItems = cartItems ? JSON.parse(cartItems) : [];
-
-        // Hapus ID produk dari keranjang
-        cartItems = cartItems.filter(function(item) {
-        return item !== productId;
-        });
-
-        // Simpan kembali data keranjang ke localStorage
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        countLocalStorageItems();
-        console.log('Produk berhasil dihapus dari keranjang.');
         // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
     });
 
@@ -154,88 +162,23 @@
         var cartItems = localStorage.getItem('cartItems');
         cartItems = cartItems ? JSON.parse(cartItems) : [];
 
+        // var qty = 0;
+        // var productId = $('.jumlah').data('id');
+        // var existingItem = cartItems.find(function(item) {
+        //         return item.productId === productId;
+        //     });
+        //     $('.jumlah').append(existingItem.qty);
+        console.log(existingItem,"productid in span")
+       
         // Lakukan manipulasi DOM atau tindakan lainnya untuk menampilkan daftar produk di keranjang
         console.log('Daftar produk di keranjang:', cartItems);
+
     }
 
     // Panggil fungsi getCartItems saat halaman dimuat
     getCartItems();
     });
 
-    // $(document).ready(function() {
-    //      // Menangani tombol "Add to Cart"
-    //     $(".add-to-cart").click(function() {
-    //         var productId = $(this).data("id");
-            
-    //         // Mengirim permintaan AJAX untuk menambahkan produk ke keranjang
-    //         $.ajax({
-    //         url: "/api/add-to-cart",
-    //         method: "POST",
-    //         data: {id: productId},
-    //         success: function(response) {
-    //             // Memperbarui tampilan keranjang setelah produk ditambahkan
-    //             updateCartView(response);
-    //         }
-    //         });
-    //     });
-        
-    //     // Menangani tombol "Update Cart"
-    //     $("#cart-items").on("click", ".update-cart", function() {
-    //         var productId = $(this).data("id");
-    //         var quantity = $(this).siblings(".quantity").val();
-    //         console.log(quantity,">>>>QTY")
-    //         // Mengirim permintaan AJAX untuk memperbarui jumlah produk dalam keranjang
-    //         $.ajax({
-    //         url: "/api/update-cart",
-    //         method: "POST",
-    //         data: {id: productId, quantity: quantity},
-    //         success: function(response) {
-    //             console.log(response,"response>>>>")
-    //             // Memperbarui tampilan keranjang setelah jumlah produk diperbarui
-    //             updateCartView(response);
-    //         }
-    //         });
-    //     });
-        
-    //     // Menangani tombol "Remove from Cart"
-    //     $("#cart-items").on("click", ".remove-from-cart", function() {
-    //         var productId = $(this).data("id");
-            
-    //         // Mengirim permintaan AJAX untuk menghapus produk dari keranjang
-    //         $.ajax({
-    //         url: "/api/remove-from-cart",
-    //         method: "POST",
-    //         data: {id: productId},
-    //         success: function(response) {
-    //             // Memperbarui tampilan keranjang setelah produk dihapus
-    //             updateCartView(response);
-    //         }
-    //         });
-    //     });
-            
-    //         // Memperbarui tampilan keranjang
-    //         function updateCartView(cart) {
-    //             console.log(cart?.cart,">>>>>>CART DALAM VIEW");
-
-    //             // var fruits = ['Apple', 'Banana', 'Orange'];
-
-    //             // console.log(fruits,">>>PRUID")
-    //             // $.each(fruits, function(index, fruit) {
-    //             // console.log(index, fruit, ">>>>>>FRUIT EACH");
-    //             // });
-
-    //             $("#cart-items").html("");
-    //             $.each(cart?.cart, function(index, item) {
-    //                 console.log(item.name,">>>>ITEM NAME")
-    //             var cartItem = $("<li>").html(item.name + " - IDR" + item.price + " x " + item.quantity);
-    //             var updateButton = $("<button>").addClass("update-cart").text("Update");
-    //             var removeButton = $("<button>").addClass("remove-from-cart").text("Remove");
-    //             var quantityInput = $("<input>").addClass("quantity").attr("type", "number").val(item.quantity);
-    //             cartItem.append(quantityInput, updateButton, removeButton);
-    //             $("#cart-items").append(cartItem);
-    //             });
-    //         }
-    //     });
     </script>
     
 @endsection
