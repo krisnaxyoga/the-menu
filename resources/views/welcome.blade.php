@@ -50,8 +50,7 @@
                                         <input type="text" hidden name="table_number" value="{{$table}}" class="form-control form-control-user @error('table_number') is-invalid @enderror"/>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Reservation
-                                        </button>
-                                        
+                                        </button>                  
                                     </form>
                                     <hr>
                                 </div>
@@ -59,11 +58,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-       
     </div>
 </section>
 @endsection

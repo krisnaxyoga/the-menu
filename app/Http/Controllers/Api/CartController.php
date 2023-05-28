@@ -5,12 +5,28 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderDetails;
 
 class CartController extends Controller
 {
     // public function getcart(){
     //     session()->get('data');
     // }
+    public function checkout(Request $request){
+        $cartItems =  $request->data;
+        
+            $order = new Order;
+            $order->customer_id =  $cartItems['cust'];
+            $order->product_id =  $cartItems['idproduct'];
+            $order->table_id =  $cartItems['table'];
+            $order->subtotal = $cartItems['price'];
+            $order->qty =  $cartItems['qty'];
+            $order->save();
+            
+        
+        return response()->json(['success' => true]);
+    }
     public function addToCart(Request $request)
     {
         $productId = $request->id;

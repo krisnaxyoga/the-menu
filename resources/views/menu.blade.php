@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div>
-                                    <a class="btn btn-info" href="{{ route('cart',$meja) }}" >
+                                    <a class="btn btn-info" href="{{ route('cart',['table'=>$meja,'cust'=>$cust]) }}" >
                                     <i class="fas fa-shopping-cart fa-fw"></i>
                                     <!-- Counter - Messages -->
                                     <span class="badge badge-danger badge-counter" id="nilai"></span>
@@ -127,9 +127,12 @@
 
         if (existingItem) {
             // Jika item sudah ada, tambahkan kuantitasnya
-            existingItem.qty += 1;
+             // Konversi existingItem.qty menjadi angka sebelum penambahan
+                var qty = parseInt(existingItem.qty);
+                // Jika produk sudah ada, tambahkan 1 ke jumlahnya
+                existingItem.qty = qty + 1;
             
-        alert('Jumlah Produk = '+existingItem.qty);
+        alert('Jumlah item = '+existingItem.qty);
         } else {
             // Jika item belum ada, tambahkan item baru ke keranjang
             var newItem = {
@@ -156,18 +159,13 @@
         // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
     });
 
+
     // Fungsi untuk mendapatkan daftar produk di keranjang
     function getCartItems() {
         // Ambil data keranjang dari localStorage
         var cartItems = localStorage.getItem('cartItems');
         cartItems = cartItems ? JSON.parse(cartItems) : [];
 
-        // var qty = 0;
-        // var productId = $('.jumlah').data('id');
-        // var existingItem = cartItems.find(function(item) {
-        //         return item.productId === productId;
-        //     });
-        //     $('.jumlah').append(existingItem.qty);
         console.log(existingItem,"productid in span")
        
         // Lakukan manipulasi DOM atau tindakan lainnya untuk menampilkan daftar produk di keranjang

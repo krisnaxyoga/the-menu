@@ -51,7 +51,7 @@ class CustomerController extends Controller
             $data->save();
 
             return redirect()
-                ->route('menu.food',$request->table_number)
+                ->route('menu.food',['table' => $request->table_number, 'cust' => $data->id])
                 ->with('message', 'Reservation Success.');
         }
     }

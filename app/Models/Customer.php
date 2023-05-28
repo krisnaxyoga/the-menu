@@ -9,4 +9,11 @@ class Customer extends Model
 {
     use HasFactory;
   
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
+
+    public function table() {
+        return $this->belongsTo(Table::class, 'table_id');
+    }
 }

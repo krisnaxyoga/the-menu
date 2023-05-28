@@ -19,8 +19,8 @@ Route::group(['middleware' => 'guest'], function() {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/menu/{table}', [\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('menu');
     Route::post('/customer/store',[\App\Http\Controllers\Admin\CustomerController::class, 'store'])->name('customer.store');
-    Route::get('/food/{table}',[\App\Http\Controllers\MenuController::class, 'index'])->name('menu.food');
-    Route::get('/cart/{table}',[\App\Http\Controllers\MenuController::class, 'cart'])->name('cart');
+    Route::get('/food/{table}/{cust}',[\App\Http\Controllers\MenuController::class, 'index'])->name('menu.food');
+    Route::get('/cart/{table}/{cust}',[\App\Http\Controllers\MenuController::class, 'cart'])->name('cart');
   
 });
 
@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/table',\App\Http\Controllers\Admin\TableController::class);
     Route::resource('/category',\App\Http\Controllers\Admin\CategoryController::class);
     Route::get('/order',[\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('order.index');
+    Route::get('/order/{custid}',[\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('order.show');
     Route::get('/customer',[\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customer.index');
     Route::get('/createmenu/{id}',[\App\Http\Controllers\Admin\TableController::class,'createmenu'])->name('createmenu');
 });
