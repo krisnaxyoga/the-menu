@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Customer;
+use App\Models\OrderDetails;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -14,7 +16,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $data = Order::all();
+
+        return view('admin.order.index',compact('data'));
     }
 
     /**
@@ -28,10 +32,34 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,$meja,$cust)
+    public function store(Request $request)
     {
-        //
-        
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'total' => 'required',
+            'cust' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput($request->all());
+        } else {
+            $ordet = new OrderDetails;
+            $ordet->cust_id = $request->cust;
+            $ordet->total = $request->total;
+            $ordet->status = 'selesai';
+            $ordet->save();
+
+            $customer = Customer::find($request->cust);
+            $customer->is_active = 0;
+            $customer->save();
+
+            return redirect()
+            ->route('home')
+            ->with('message', 'Reservation Success.');
+        }
     }
 
     /**
@@ -40,7 +68,9 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::where('customer_id',$id)->with('customer')->with('table')->with('product')->get();
-        return view('admin.order.detail',compact('order'));
+        $total = Order::where('customer_id',$id)->sum('subtotal');
+        $cust_id = $id;
+        return view('admin.order.detail',compact('order','total','cust_id'));
     }
 
     /**

@@ -13,6 +13,10 @@ class Customer extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function order_details() {
+        return $this->hasMany(OrderDetails::class);
+    }
+
     public function table() {
         return $this->belongsTo(Table::class, 'table_id');
     }

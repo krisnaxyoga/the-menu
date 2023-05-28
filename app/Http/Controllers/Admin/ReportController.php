@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\OrderDetails;
 
 class ReportController extends Controller
 {
@@ -12,7 +13,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
+        $data = OrderDetails::all();
+
+        return view('admin.report.index',compact('data'));
     }
 
     /**

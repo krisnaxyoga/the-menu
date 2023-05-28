@@ -19,6 +19,13 @@ class CustomerController extends Controller
         return view('welcome',compact('table'));
     }
 
+    public function cust()
+    {
+        // dd($table);
+        $data = Customer::all();
+        return view('admin.customer.index',compact('data'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -48,6 +55,7 @@ class CustomerController extends Controller
             $data->name = $request->name;
             $data->table_id = $table[0]->id;
             $data->phone = $request->phone;
+            $data->is_active = 1;
             $data->save();
 
             return redirect()

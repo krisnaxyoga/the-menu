@@ -82,7 +82,7 @@
                             <div class="nav-link-icon"><i data-feather="bookmark"></i></div>
                             order
                         </a>
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('report.index') }}">
                             <div class="nav-link-icon"><i data-feather="book"></i></div>
                             report
                         </a>

@@ -24,6 +24,19 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Total Harga : <span style="font-weight:bold" class="text-danger">{{ 'Rp ' . number_format($total, 0, ',', '.') }}</span></h3>
+                            <form action="{{ route('order.store') }}" method="post">
+                                @csrf
+                                <input class="form-control" hidden type="number" name="total" value="{{ $total }}">
+                                <input class="form-control" hidden type="text" name="cust" value="{{ $cust_id }}">
+                                <button type="submit" class="btn btn-primary">order selesai</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
-use App\Models\OrderDetails;
+
 
 class CartController extends Controller
 {
@@ -22,6 +22,7 @@ class CartController extends Controller
             $order->table_id =  $cartItems['table'];
             $order->subtotal = $cartItems['price'];
             $order->qty =  $cartItems['qty'];
+            $order->is_active = 1;
             $order->save();
             
         

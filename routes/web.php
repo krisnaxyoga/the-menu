@@ -31,7 +31,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('/table',\App\Http\Controllers\Admin\TableController::class);
     Route::resource('/category',\App\Http\Controllers\Admin\CategoryController::class);
     Route::get('/order',[\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('order.index');
+    Route::post('/order/store',[\App\Http\Controllers\Admin\OrderController::class, 'store'])->name('order.store');
     Route::get('/order/{custid}',[\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('order.show');
-    Route::get('/customer',[\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customer.index');
+    Route::get('/customer',[\App\Http\Controllers\Admin\CustomerController::class, 'cust'])->name('customer.index');
+    Route::get('/report',[\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('report.index');
+  
     Route::get('/createmenu/{id}',[\App\Http\Controllers\Admin\TableController::class,'createmenu'])->name('createmenu');
 });

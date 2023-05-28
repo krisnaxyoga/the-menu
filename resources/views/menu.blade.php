@@ -35,7 +35,7 @@
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{$item->name}}</h5>
                                                             <p class="card-text">{{ $item->categoryproduct->name }}</p>
-                                                            <p>{{$item->price}}</p>
+                                                            <p>{{'Rp ' . number_format($item->price, 0, ',', '.')}}</p>
                                                             <button data-id="{{$item->id}}" data-price="{{$item->price}}" data-name="{{$item->name}}" class="btn btn-primary add-to-cart"><i data-feather="plus"></i></button>
                                                             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal-{{ $item->id }}">
                                                                 <i data-feather="eye"></i>
