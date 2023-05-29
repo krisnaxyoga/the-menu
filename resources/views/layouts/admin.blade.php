@@ -37,20 +37,17 @@
                         </div>
                     </h6>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{route('setting.index')}}">
                         <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
-                        Account
+                        Ganti Password
                     </a>
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{-- {{ Auth::user()->name }} --}}
-                    </a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
+                    <a class="dropdown-item" href="{{ route('admin.logout') }}"
                     onclick="event.preventDefault();
                                   document.getElementById('logout-form').submit();">
-                     {{ __('Logout') }}
+                    <div class="dropdown-item-icon"><i data-feather="power"></i></div> {{ __('Logout') }}
                  </a>
 
-                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                 <form id="logout-form" action="{{ route('admin.logout') }}" method="GET" class="d-none">
                      @csrf
                  </form>
                 </div>
@@ -99,10 +96,18 @@
                             <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                            Pengiriman
                         </a> --}}
-                        {{-- <a class="nav-link" href="{{ route('log') }}">
+                        <a class="nav-link" href="{{route('setting.index')}}">
                             <div class="nav-link-icon"><i data-feather="settings"></i></div>
-                          Logout
-                        </a> --}}
+                           Setting
+                        </a>
+                        <a class="nav-link" href="{{route('admin.logout')}}">
+                            <div class="nav-link-icon"><i data-feather="power"></i></div>
+                           Log Out
+                        </a>
+                        {{-- <form action="{{ route('admin.logout') }}" method="POST">
+                            @csrf
+                            <button type="submit">Logout</button>
+                        </form> --}}
                     </div>
                 </div>
                 <div class="sidenav-footer">
