@@ -16,7 +16,6 @@ use App\Http\Controllers\AuthController;
 Route::group(['middleware' => 'guest'], function() {
     Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('dologin');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/menu/{table}', [\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('menu');
     Route::post('/customer/store',[\App\Http\Controllers\Admin\CustomerController::class, 'store'])->name('customer.store');
     Route::get('/food/{table}/{cust}',[\App\Http\Controllers\MenuController::class, 'index'])->name('menu.food');
@@ -24,7 +23,8 @@ Route::group(['middleware' => 'guest'], function() {
   
 });
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['authtwo']], function() {
+    Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('admin.logout');
     Route::get('/home', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('home');
     Route::resource('/category',\App\Http\Controllers\Admin\CategoryController::class);
     Route::resource('/product',\App\Http\Controllers\Admin\ProductController::class);
