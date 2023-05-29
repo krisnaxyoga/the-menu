@@ -26,11 +26,14 @@
                         </div>
                         <div class="form-group">
                             <?php if(old('image_name', $model->image_name) !== null){ ?>
-                            <img src="{{ $model->image_url }}" class="img-fluid" style="width:200px;height:150px" alt=""/>
-                            <?php } ?>
-                            <img id="image-preview" src="#" alt="Preview">
+                            <label class="small mb-1">old image<span class="text-danger">*</span></label>
+                                <img src="{{ $model->image_url }}" class="img-fluid" style="width:200px;height:150px" alt=""/>
+                                <?php } ?>
+                        </div>
+                        <div class="form-group">
                             <label class="small mb-1">image<span class="text-danger">*</span></label>
                             <input id="image-input" class="form-control form-control-solid" name="image" type="file" placeholder="Name" value="{{ old('image_name', $model->image_name) }}" />
+                            <img id="image-preview" class="mt-3" style="width: 200px" src="#" alt="Preview">
                         </div>
                         <div class="form-group">
                             <label class="small mb-1">category<span class="text-danger">*</span></label>
