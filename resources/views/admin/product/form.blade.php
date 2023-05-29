@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('title','Product')
 @section('content')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-8">
@@ -27,8 +28,9 @@
                             <?php if(old('image_name', $model->image_name) !== null){ ?>
                             <img src="{{ $model->image_url }}" class="img-fluid" style="width:200px;height:150px" alt=""/>
                             <?php } ?>
+                            <img id="image-preview" src="#" alt="Preview">
                             <label class="small mb-1">image<span class="text-danger">*</span></label>
-                            <input class="form-control form-control-solid" name="image" type="file" placeholder="Name" value="{{ old('image_name', $model->image_name) }}" />
+                            <input id="image-input" class="form-control form-control-solid" name="image" type="file" placeholder="Name" value="{{ old('image_name', $model->image_name) }}" />
                         </div>
                         <div class="form-group">
                             <label class="small mb-1">category<span class="text-danger">*</span></label>
@@ -58,4 +60,22 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+      // Mengaktifkan event change pada input file
+      $('#image-input').change(function() {
+        // Mengecek apakah ada file yang dipilih
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+    
+          reader.onload = function(e) {
+            // Menampilkan pratinjau gambar pada elemen img
+            $('#image-preview').attr('src', e.target.result);
+          }
+    
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    });
+    </script>
 @endsection

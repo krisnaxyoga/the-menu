@@ -11,6 +11,7 @@
     <link href="/dashboard_assets/cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="/dashboard_assets/cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" crossorigin="anonymous" />
     <link rel="icon" type="image/x-icon" href="/images/logo.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script data-search-pseudo-elements defer src="/dashboard_assets/cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     <script src="/dashboard_assets/cdnjs.cloudflare.com/ajax/libs/feather-icons/4.27.0/feather.min.js" crossorigin="anonymous"></script>
     @stack('style')
@@ -90,18 +91,18 @@
                             <div class="nav-link-icon"><i data-feather="users"></i></div>
                             customers
                         </a>
-                        <a class="nav-link" href="#">
+                        {{-- <a class="nav-link" href="#">
                             <div class="nav-link-icon"><i data-feather="user"></i></div>
                            user
-                        </a>
+                        </a> --}}
                         {{-- <a class="nav-link" href="{{ route('dashboard.pengiriman.index') }}">
                             <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                            Pengiriman
                         </a> --}}
-                        <a class="nav-link" href="#">
+                        {{-- <a class="nav-link" href="{{ route('log') }}">
                             <div class="nav-link-icon"><i data-feather="settings"></i></div>
-                           Setting
-                        </a>
+                          Logout
+                        </a> --}}
                     </div>
                 </div>
                 <div class="sidenav-footer">
