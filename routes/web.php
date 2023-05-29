@@ -35,6 +35,8 @@ Route::group(['middleware' => ['authtwo']], function() {
     Route::get('/order/{custid}',[\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('order.show');
     Route::get('/customer',[\App\Http\Controllers\Admin\CustomerController::class, 'cust'])->name('customer.index');
     Route::get('/report',[\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('report.index');
+    Route::get('/setting',[\App\Http\Controllers\SettingController::class, 'index'])->name('setting.index');
+    Route::post('/setting/update',[\App\Http\Controllers\SettingController::class, 'update'])->name('setting.update');
   
     Route::get('/createmenu/{id}',[\App\Http\Controllers\Admin\TableController::class,'createmenu'])->name('createmenu');
 });
