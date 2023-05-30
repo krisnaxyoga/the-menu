@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OrderDetails;
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 class ReportController extends Controller
 {
     /**
@@ -13,14 +14,14 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $start = $request->startdate;
-        $end = $request->enddate; 
+        $start = Carbon::parse($request->startdate)->format('Y-m-d');
+        $end = Carbon::parse($request->enddate)->format('Y-m-d'); 
         // dd($start);
         if($start){
-            $data = OrderDetails::where('created_at', $start)->where('status','dibayar')->get();
+            $data = OrderDetails::where(DB::raw('DATE(created_at)'), $start)->where('status','dibayar')->get();
            
         }elseif($start && $end){
-            $data = OrderDetails::whereBetween('created_at', [$start, $end])->where('status','dibayar')->get();
+            $data = OrderDetails::whereBetween(DB::raw('DATE(created_at)'), [$start, $end])->where('status','dibayar')->get();
             dd($data);
         }else{
             $data = OrderDetails::where('status','dibayar')->get();
