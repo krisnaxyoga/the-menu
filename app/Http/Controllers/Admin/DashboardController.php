@@ -12,8 +12,9 @@ class DashboardController extends Controller
     public function index()
     {
         
-        $order = Customer::where('is_active',1)->with('table')->get();
+        $order = Customer::where('is_active',0)->with('table')->get();
+        $orderbayar = Customer::where('is_active',2)->with('table')->get();
         // dd($order);
-        return view('admin.home', compact('order'));
+        return view('admin.home', compact('order','orderbayar'));
     }
 }

@@ -6,13 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Customer;
 
 
 class CartController extends Controller
 {
-    // public function getcart(){
-    //     session()->get('data');
-    // }
+    public function menu(){
+        $data = Product::with('categoryproduct')->get();
+        return response()->json([
+            'menu' => $data
+        ]);
+    }
     public function checkout(Request $request){
         $cartItems =  $request->data;
         
@@ -24,10 +28,15 @@ class CartController extends Controller
             $order->qty =  $cartItems['qty'];
             $order->is_active = 1;
             $order->save();
+
+            $cust = Customer::find($cartItems['cust']);
+            $cust->is_active = 1;
+            $cust->save();
             
         
         return response()->json(['success' => true]);
     }
+
     public function addToCart(Request $request)
     {
         $productId = $request->id;

@@ -20,7 +20,7 @@ Route::group(['middleware' => 'guest'], function() {
     Route::post('/customer/store',[\App\Http\Controllers\Admin\CustomerController::class, 'store'])->name('customer.store');
     Route::get('/food/{table}/{cust}',[\App\Http\Controllers\MenuController::class, 'index'])->name('menu.food');
     Route::get('/cart/{table}/{cust}',[\App\Http\Controllers\MenuController::class, 'cart'])->name('cart');
-  
+    Route::get('/orderlist/{table}/{cust}',[\App\Http\Controllers\MenuController::class, 'orderlist'])->name('orderlist');
 });
 
 Route::group(['middleware' => ['authtwo']], function() {
@@ -33,6 +33,9 @@ Route::group(['middleware' => ['authtwo']], function() {
     Route::get('/order',[\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('order.index');
     Route::post('/order/store',[\App\Http\Controllers\Admin\OrderController::class, 'store'])->name('order.store');
     Route::get('/order/{custid}',[\App\Http\Controllers\Admin\OrderController::class, 'show'])->name('order.show');
+    
+    Route::get('/orderbayar/{custid}',[\App\Http\Controllers\Admin\OrderController::class, 'paid'])->name('order.bayar');
+    Route::get('/orderselesai/{custid}',[\App\Http\Controllers\Admin\OrderController::class, 'showselesai'])->name('order.showselesai');
     Route::get('/customer',[\App\Http\Controllers\Admin\CustomerController::class, 'cust'])->name('customer.index');
     Route::get('/report',[\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('report.index');
     Route::get('/setting',[\App\Http\Controllers\SettingController::class, 'index'])->name('setting.index');

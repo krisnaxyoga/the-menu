@@ -14,6 +14,7 @@
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
+                                    <th>status</th>
                                     <th>customer</th>
                                     <th>table number</th>
                                     <th>menu</th>
@@ -25,6 +26,19 @@
                             <tbody>
                                 @foreach ($data as $item)
                                 <tr>
+                                    @if($item->is_active == 1)
+                                    <td>
+                                        <span class="bg-warning badge text-bg-warning text-light">menu sedang di siapkan</span>
+                                    </td>
+                                    @elseif($item->is_active == 2)
+                                    <td>
+                                        <span class="bg-success badge text-bg-succes text-light">sudah dibayar</span>
+                                    </td>
+                                    @else
+                                    <td>
+                                        <span class="bg-primary badge text-bg-primary text-light">selesai</span>
+                                    </td>
+                                    @endif
                                     <td>{{ $item->customer->name }}</td>
                                     <td>{{ $item->table->table_number }}</td>
                                    <td>{{ $item->product->name }}</td>
