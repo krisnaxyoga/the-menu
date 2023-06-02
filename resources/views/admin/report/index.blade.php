@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 @section('title', 'order')
 @section('content')
+
+
 <section>
 <div class="container mt-4">
     <div class="row">
@@ -29,9 +31,9 @@
                     <div class="d-flex justify-content-between">
                         <h2>order report</h2>
                         <div class="form-group">
-                            <button class="btn btn-secondary mx-2" id="print-excel">Cetak Excel</button>
+                            <button class="btn btn-secondary mx-2" id="printButton"><i class="fa fa-file-pdf" aria-hidden="true"></i> &nbsp; Cetak laporan</button>
                         </div>
-                        <h3>Total pendapatan : <span class="text-success" style="font-weight: bold">{{ 'Rp ' . number_format($total, 0, ',', '.') }}</span></h3>
+                        {{-- <h3>Total pendapatan : <span class="text-success" id="total" style="font-weight: bold">{{ 'Rp ' . number_format($total, 0, ',', '.') }}</span></h3> --}}
                     </div>
                     
                 </div>
@@ -53,6 +55,9 @@
                                    <td>{{ $item->created_at }}</td>
                                 </tr>
                                 @endforeach
+                                <tr>
+                                    <td> Total Pendapatan : <span class="text-success" id="total" style="font-weight: bold">{{ 'Rp ' . number_format($total, 0, ',', '.') }}</span></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -62,30 +67,22 @@
     </div>
 </div>
 </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
-
 <script>
-    document.getElementById('print-excel').addEventListener('click', function() {
-        // Ambil data yang ingin dicetak
-        var array = {{$data}};
-        var data = [
-            ['CUSTOMER', 'TOTAL BAYAR','DATE'],
-            array.forEach(function(element) {
-                [ element.customer->name, element.total, element.created_at],
-            });
-        ];
+   $(document).ready(function() {
+            $('#printButton').click(function() {
+                var nilai = $('#total').text();
+                console.log(nilai);
+                var printContents = $('#dataTable').prop('outerHTML');
+                // var total = '<h3 style="font-weight: bold"> Total : '+nilai+'</h3>'
+                // $('.table-bordered').append(total);
+                var originalContents = $('body').html();
+               
+                console.log(printContents);
+                $('body').html(printContents);
+                window.print();
 
-        // Buat workbook baru
-        var workbook = XLSX.utils.book_new();
-        
-        // Buat worksheet
-        var worksheet = XLSX.utils.aoa_to_sheet(data);
-        
-        // Tambahkan worksheet ke workbook
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Data');
-        
-        // Simpan workbook sebagai file Excel
-        XLSX.writeFile(workbook, 'data.xlsx');
+                $('body').html(originalContents);
+            });
         });
 </script>
 @endsection

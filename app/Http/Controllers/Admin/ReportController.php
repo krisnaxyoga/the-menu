@@ -17,15 +17,13 @@ class ReportController extends Controller
         $start = Carbon::parse($request->startdate)->format('Y-m-d');
         $end = Carbon::parse($request->enddate)->format('Y-m-d'); 
         // dd($start);
-        if($start){
-            $data = OrderDetails::where(DB::raw('DATE(created_at)'), $start)->where('status','dibayar')->get();
-           
-        }elseif($start && $end){
+        if($start && $end){
             $data = OrderDetails::whereBetween(DB::raw('DATE(created_at)'), [$start, $end])->where('status','dibayar')->get();
-            dd($data);
+            // dd($data);
         }else{
             $data = OrderDetails::where('status','dibayar')->get();
         }
+        $data = $data;
         $total = $data->sum('total');
         return view('admin.report.index',compact('data','total'));
     }
