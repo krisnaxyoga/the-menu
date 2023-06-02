@@ -20,8 +20,8 @@
   <body>
     <nav class="topnav navbar navbar-expand shadow navbar-light bg-white" id="sidenavAccordion">
         <a class="navbar-brand h-100 text-truncate" href="{{ route('home') }}">
-            <img class="img-fluid" src="/images/logo.png"/>
-             Dashboard Admin
+            <img class="img-fluid" src="/images/themenu.png"/>
+             dashboard
         </a>
         <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#"><i data-feather="menu"></i></button>
         
