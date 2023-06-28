@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\CategoryProduct;
+use App\Models\Table;
 
 class MenuController extends Controller
 {
@@ -32,5 +33,15 @@ class MenuController extends Controller
         return view('order',compact('meja','cust','data'));
     }
 
-    
+    public function table(){
+        $data = Table::all();
+
+        return view('table',compact('data'));
+    }
+
+    public function payment(Request $request,$meja,$cust){
+        $data = Order::where('customer_id',$cust)->get();
+
+        return view('table',compact('data'));
+    }
 }

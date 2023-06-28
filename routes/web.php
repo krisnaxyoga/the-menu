@@ -16,6 +16,7 @@ use App\Http\Controllers\AuthController;
 Route::group(['middleware' => 'guest'], function() {
     Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('dologin');
+    Route::get('/menu/table', [\App\Http\Controllers\MenuController::class, 'table'])->name('home.table');
     Route::get('/menu/{table}', [\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('menu');
     Route::post('/customer/store',[\App\Http\Controllers\Admin\CustomerController::class, 'store'])->name('customer.store');
     Route::get('/food/{table}/{cust}',[\App\Http\Controllers\MenuController::class, 'index'])->name('menu.food');

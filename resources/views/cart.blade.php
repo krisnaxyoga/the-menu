@@ -146,6 +146,7 @@
 
                 $("#nilai").text(itemCount);
                 window.location.reload();
+                // window.location.href = 'https://www.example.com';
                 // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
             },
             error: function(error) {

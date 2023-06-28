@@ -38,9 +38,18 @@
                                                                    
                                                                 </div>
                                                             </div>
-                                                            <span>
+                                                            {{-- <span>
                                                                 @if($item->is_active == 1)
                                                                 <span class="bg-warning badge text-bg-warning text-light">menu sedang di siapkan</span>
+                                                                @elseif($item->is_active == 2)
+                                                                <span class="bg-success badge text-bg-succes text-light">sudah dibayar</span>
+                                                                @else
+                                                                <span class="bg-primary badge text-bg-primary text-light">selesai</span>
+                                                                @endif
+                                                            </span> --}}
+                                                            <span>
+                                                                @if($item->is_active == 1)
+                                                                <span class="bg-warning badge text-bg-warning text-light">pesanan belum di bayar</span>
                                                                 @elseif($item->is_active == 2)
                                                                 <span class="bg-success badge text-bg-succes text-light">sudah dibayar</span>
                                                                 @else
