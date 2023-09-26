@@ -29,6 +29,23 @@ class AuthController extends Controller
         }
     }
 
+    public function logincustomer(Request $request)
+    {
+        // dd($request);
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            // Login sukses
+            return redirect()->intended('/home');
+        } else {
+            // Login gagal
+            return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
+        }
+    }
+
     public function logout()
     {
         Auth::logout();

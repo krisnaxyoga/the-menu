@@ -20,7 +20,7 @@
                                 </a>
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 mt-3">KERANJANG BELANJA</h1>
-                                        
+
                                     </div>
                                     <div class="container">
                                         <div class="row justify-content-center" id="products">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                             
+
     </div>
      <!-- Bottom Navbar -->
 <nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
@@ -55,6 +55,12 @@
             <a href="{{route('orderlist',['table'=>$meja,'cust'=>$cust])}}" class="nav-link text-center text-secondary">
                 <i class="fa fa-book" aria-hidden="true"></i>
                 <span class="small d-block">Order list</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('payment',['table'=>$meja,'cust'=>$cust])}}" class="nav-link text-center text-secondary">
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                <span class="small d-block">Bayar Pesanan</span>
             </a>
         </li>
     </ul>
@@ -99,7 +105,7 @@
         console.log('Daftar produk di keranjang:', cartItems);
         updateCartView(cartItems);
     // Fungsi untuk menambahkan produk ke keranjang
-   
+
     $('.remove-from-cart').off('click').on('click', function() {
         var productId = $(this).data('id');
         console.log(productId,"produk id<<<<<<<<<<<<<<<<")
@@ -124,7 +130,7 @@
         console.log('Produk berhasil dihapus dari keranjang.');
         // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
     });
-     
+
     $('#checkout').off('click').on('click', function() {
         // alert("chekout")
         var meja = $(this).data('meja');
@@ -187,7 +193,7 @@
         // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
     });
 
-   
+
             // Memperbarui tampilan keranjang
             function updateCartView(cart) {
                 console.log(cart,">>>>>>CART DALAM VIEW");
@@ -201,7 +207,7 @@
                 // var removeButton = $("<button>").addClass("remove-from-cart btn btn-danger").attr("data-id", ""+item.productId+"").text("Remove");
                 // var quantityInput = $("<input>").addClass("qty form-control").attr("type", "number").attr("data-id", ""+item.productId+"").val(item.qty);
                 // cartItem.append(quantityInput,  removeButton);
-               
+
                 $("#cart-items").append(html);
                 });
               console.log(itemCount,">>>>>dalam view")
@@ -210,7 +216,7 @@
                     $("#cart-items").after(card);
                 }else{
                     var button = '<button class="btn btn-primary mb-5" data-meja="{{ $meja }}" data-cust="{{ $cust }}" id="checkout">CHECKOUT</button>';
-             
+
                     $("#cart-items").after(button);
                 }
 
@@ -229,5 +235,5 @@
             });
         });
     </script>
-    
+
 @endsection

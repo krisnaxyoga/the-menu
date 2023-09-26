@@ -30,12 +30,12 @@
                                                                 <div>
                                                                   <h3>Menu : </h3>
                                                                   <p style="font-weight: bold">{{$item->product->name}}</p>
-                                                                  <p>Qty :</p> 
+                                                                  <p>Qty :</p>
                                                                   <p style="font-weight: bold">{{$item->qty}} pcs</p>
                                                                 </div>
                                                                 <div>
                                                                     <p>sub total : <span style="font-weight: bold">{{'Rp ' . number_format($item->subtotal, 0, ',', '.')}}</span></p>
-                                                                   
+
                                                                 </div>
                                                             </div>
                                                             {{-- <span>
@@ -51,16 +51,20 @@
                                                                 @if($item->is_active == 1)
                                                                 <span class="bg-warning badge text-bg-warning text-light">pesanan belum di bayar</span>
                                                                 @elseif($item->is_active == 2)
-                                                                <span class="bg-success badge text-bg-succes text-light">sudah dibayar</span>
+                                                                <span class="bg-success badge text-bg-succes text-light">pesanan selesai</span>
+                                                                @elseif($item->is_active == 0)
+                                                                <span class="bg-info badge text-bg-info text-light">pesanan di proses</span>
                                                                 @else
                                                                 <span class="bg-primary badge text-bg-primary text-light">selesai</span>
                                                                 @endif
                                                             </span>
-                                                           
+
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                             
+
     </div>
    <!-- Bottom Navbar -->
 <nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
@@ -91,8 +95,14 @@
                 <span class="small d-block">Order list</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{route('payment',['table'=>$meja,'cust'=>$cust])}}" class="nav-link text-center text-secondary">
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                <span class="small d-block">Bayar Pesanan</span>
+            </a>
+        </li>
     </ul>
 </nav>
 </section>
-    
+
 @endsection

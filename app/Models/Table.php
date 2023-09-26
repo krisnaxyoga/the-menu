@@ -16,4 +16,8 @@ class Table extends Model
     public function customers() {
         return $this->hasMany(Customer::class);
     }
+
+    public function reservasi() {
+        return $this->hasMany(Reservation::class);
+    }
 }

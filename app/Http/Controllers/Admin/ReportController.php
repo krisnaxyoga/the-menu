@@ -15,7 +15,7 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $start = Carbon::parse($request->startdate)->format('Y-m-d');
-        $end = Carbon::parse($request->enddate)->format('Y-m-d'); 
+        $end = Carbon::parse($request->enddate)->format('Y-m-d');
         // dd($start);
         if($start && $end){
             $data = OrderDetails::whereBetween(DB::raw('DATE(created_at)'), [$start, $end])->where('status','dibayar')->get();
@@ -25,6 +25,7 @@ class ReportController extends Controller
         }
         $data = $data;
         $total = $data->sum('total');
+        // dd($data);
         return view('admin.report.index',compact('data','total'));
     }
 

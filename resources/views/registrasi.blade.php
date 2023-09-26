@@ -17,7 +17,7 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Registrasi</h1>
 
                                         @if (session()->has('error'))
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -26,12 +26,12 @@
                                         </div>
                                     @endif
                                     </div>
-                                    <form class="user"  method="post" action="{{ route('customer.update',$cust[0]->id) }}">
+                                    <form class="user"  method="post" action="{{ route('customer.store') }}">
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control form-control-user @error('name') is-invalid @enderror"
                                                 id="exampleInputname" aria-describedby="nameHelp"
-                                                placeholder="Enter Name..." value="{{ $cust[0]->name }}">
+                                                placeholder="Enter Name...">
                                                 @error('name')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -39,27 +39,22 @@
                                               @enderror
                                         </div>
                                         <div class="form-group">
+                                            <input type="text" name="email" class="form-control form-control-user @error('name') is-invalid @enderror"
+                                                id="exampleInputname" aria-describedby="nameHelp"
+                                                placeholder="Enter email...">
+                                        </div>
+                                        <div class="form-group">
                                             <input type="number" name="phone" class="form-control form-control-user @error('phone') is-invalid @enderror"
-                                                id="exampleInputphone" placeholder="phone" value="{{ $cust[0]->phone }}">
+                                                id="exampleInputphone" placeholder="phone">
                                                 @error('phone')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                         </div>
-                                        <div class="form-group">
-                                            <input type="date" name="tgl_reservasi" class="form-control form-control-user"
-                                                id="exampleInputphone" placeholder="tgl reservasi..." value="">
-
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="time" name="waktu_reservasi" class="form-control form-control-user"
-                                                id="exampleInputphone" placeholder="waktu reservasi..." value="">
-
-                                        </div>
-                                        <input type="text" hidden name="table_number" value="{{$table}}" class="form-control form-control-user @error('table_number') is-invalid @enderror"/>
+                                        <input type="text" hidden name="table_number" value="0" class="form-control form-control-user @error('table_number') is-invalid @enderror"/>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
-                                            Reservation
+                                            Register
                                         </button>
                                     </form>
                                     <hr>

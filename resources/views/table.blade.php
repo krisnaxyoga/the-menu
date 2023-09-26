@@ -3,7 +3,7 @@
 @section('content')
 <section class="mt-5">
     <div class="container">
-        
+
     <h1 class="text-center">MEJA</h1>
         <div class="row">
             @foreach ($data as $item)
@@ -12,7 +12,14 @@
                     <div class="card-body">
                         <ul>
                             <li><p class="text-white">Nomor meja : {{$item->table_number}}</p></li>
-                            <li><a href="{{route('menu',$item->table_number)}}" class="btn btn-primary">reservasi</a></li>
+                            <li>
+                                @if($item->is_active == 1)
+                                @if ($item->id == $rev)
+                                <a href="{{route('menu.food',['table'=>$item->table_number,'cust'=>$cust])}}" class="btn btn-primary">menu</a>
+                                @endif
+                                 @else <a href="{{route('menu',['table'=>$item->table_number,'cust'=>$cust])}}" class="btn btn-primary">reservasi</a> @endif
+
+                            </li>
                         </ul>
                     </div>
                 </div>

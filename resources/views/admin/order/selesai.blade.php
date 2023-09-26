@@ -25,7 +25,7 @@
                     @endforeach
                 </div>
                 <div class="col-lg-6">
-                    <div class="card">
+                    <div class="card mb-3">
                         <div class="card-body">
                             <h3>Total Harga : <span style="font-weight:bold" class="text-danger">{{ 'Rp ' . number_format($total, 0, ',', '.') }}</span></h3>
                             {{-- <form action="{{ route('order.bayar') }}" method="post">
@@ -35,6 +35,15 @@
                                 <button type="submit" class="btn btn-success">Order Selesai</button>
                             </form> --}}
                             <a href="{{ route('order.bayar',$cust_id) }}" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 card">
+                        <div class="card-body">
+                            <h4>
+                                bukti bayar
+                            </h4>
+                            <img src="{{ $payment[0]->image }}" class="img-fluid" alt="{{ $payment[0]->image }}">
                         </div>
                     </div>
                 </div>

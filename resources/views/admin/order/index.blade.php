@@ -20,7 +20,8 @@
                                     <th>menu</th>
                                     <th>qty</th>
                                     <th>sub total</th>
-                                    <th>create at</th>
+                                    <th>waktu reservasi</th>
+                                    <th>tanggal reservasi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,7 +45,8 @@
                                    <td>{{ $item->product->name }}</td>
                                    <td>{{ $item->qty }}</td>
                                    <td>{{ $item->subtotal }}</td>
-                                   <td>{{ $item->created_at }}</td>
+                                   <td>{{ $item->customer->waktu_reservasi }}</td>
+                                   <td>{{ $item->customer->tgl_reservasi }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

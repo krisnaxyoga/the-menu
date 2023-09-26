@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', 'menu')
 @section('content')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <section>
     <div class="container">
 
@@ -20,10 +22,16 @@
                                         </div>
                                     @endif
                                     </div>
+                                    @if (!$total)
+                                    <p>tidak ada pesanan</p>
+                                    @else
                                     <div class="container">
-                                        <div class="row">
-                                            <div class="col-lg-12">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-6">
                                                 <div class="card">
+                                                    <div class="card-header">
+                                                       Total Bayar : Rp.{{ $total }}
+                                                    </div>
                                                     <div class="card-body">
                                                         Bayar Disini
                                                         <ul>
@@ -35,28 +43,31 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" id="products">
-                                            <div class="col-lg-12">
-                                                <form action="" method="POST" enctype="multipart/form-data">
+                                        <div class="row justify-content-center" id="products">
+                                            <div class="col-lg-6">
+                                                <form action="{{ route('paymentprocess',['table'=>$meja,'cust'=>$cust]) }}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="mb-3">
-                                                        <label for=""></label>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-                                                    <div class="mb-3">
                                                         <label for="">upload bukti bayar</label>
-                                                        <input type="file" class="form-control" name="gambar">
+                                                        <input required id="image-input" type="file" class="form-control" name="image">
                                                     </div>
+                                                    <input type="number" name="price" hidden value="{{ $total }}">
+                                                    <img id="image-preview" class="mt-3" style="width: 200px" src="#" alt="Preview">
+                                                <div class="mb-3">
+                                                    <button class="btn btn-primary" type="submit">send</button>
+                                                </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                             
+
     </div>
    <!-- Bottom Navbar -->
 <nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
@@ -79,6 +90,30 @@
                 <span class="small d-block">Order list</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{route('payment',['table'=>$meja,'cust'=>$cust])}}" class="nav-link text-center text-secondary">
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                <span class="small d-block">Bayar Pesanan</span>
+            </a>
+        </li>
     </ul>
 </nav>
 </section>
+<script>
+    $(document).ready(function() {
+      // Mengaktifkan event change pada input file
+      $('#image-input').change(function() {
+        // Mengecek apakah ada file yang dipilih
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function(e) {
+            // Menampilkan pratinjau gambar pada elemen img
+            $('#image-preview').attr('src', e.target.result);
+          }
+
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    });
+    </script>

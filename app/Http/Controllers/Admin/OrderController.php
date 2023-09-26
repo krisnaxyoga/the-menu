@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Customer;
 use App\Models\OrderDetails;
 use Illuminate\Support\Facades\Validator;
@@ -76,26 +77,35 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::where('customer_id',$id)->with('customer')->with('table')->with('product')->where('is_active',1)->get();
-        $total = Order::where('customer_id',$id)->sum('subtotal');
+        $total = Order::where('customer_id',$id)->where('is_active',1)->sum('subtotal');
         $cust_id = $id;
         return view('admin.order.detail',compact('order','total','cust_id'));
     }
     public function paid(string $id)
     {
         $od = OrderDetails::where('cust_id',$id)->get();
-        $ordet = OrderDetails::find($od[0]->id);
-        $ordet->status = 'dibayar';
-        $ordet->save();
+
+        foreach($od as $item){
+            $ordet = OrderDetails::find($item->id);
+            $ordet->status = 'dibayar';
+            $ordet->save();
+        }
 
         $customer = Customer::find($id);
-        $customer->is_active = 2;
+        $customer->is_active = 3;
         $customer->save();
+
+        $pay = Payment::where('customer_id',$id)->where('status',1)->get();
+
+        $payment = Payment::find($pay[0]->id);
+        $payment->status = 2;
+        $payment->save();
 
         $order = Order::where('customer_id',$id)->get();
 
         foreach($order as $item){
         $or = Order::find($item->id);
-        $or->is_active = 2;
+        $or->is_active = 3;
         $or->save();
         }
 
@@ -106,9 +116,10 @@ class OrderController extends Controller
     public function showselesai(string $id)
     {
         $order = Order::where('customer_id',$id)->with('customer')->with('table')->with('product')->where('is_active',0)->get();
-        $total = Order::where('customer_id',$id)->sum('subtotal');
+        $total = Order::where('customer_id',$id)->where('is_active',0)->sum('subtotal');
         $cust_id = $id;
-        return view('admin.order.selesai',compact('order','total','cust_id'));
+        $payment = Payment::where('status',1)->where('customer_id',$cust_id)->get();
+        return view('admin.order.selesai',compact('order','total','cust_id','payment'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -131,6 +142,10 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::where('customer_id',$id)->delete();
+        // $order->delete();
+        $data = Customer::find($id);
+        $data->delete();
+        return redirect()->back()->with('message', 'data berhasil dihapus');
     }
 }

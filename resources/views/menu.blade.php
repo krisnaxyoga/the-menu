@@ -56,7 +56,7 @@
                                                                 <i data-feather="eye"></i>
                                                               </button>
                                                               <span class="jumlah-{{ $item->id }}" data-id="{{$item->id}}"></span>
-                                                           
+
                                                             <div class="modal fade" id="modal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-{{ $item->id }}-label" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                             
+
     </div>
    <!-- Bottom Navbar -->
 <nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
@@ -106,12 +106,18 @@
                 <span class="small d-block">Order list</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{route('payment',['table'=>$meja,'cust'=>$cust])}}" class="nav-link text-center text-secondary">
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                <span class="small d-block">Bayar Pesanan</span>
+            </a>
+        </li>
     </ul>
 </nav>
 </section>
 <script>
     $(document).ready(function() {
-        
+
         $('.add-to-cart').off('click').on('click', function() {
         console.log('ACTIVE ADD CART');
         var productId = $(this).data('id');
@@ -123,7 +129,7 @@
 
         // // Tambahkan ID produk ke dalam keranjang
         // cartItems.push({id:productId,price:price,name:name});
-            
+
         // Mengecek apakah item sudah ada di keranjang
         var existingItem = cartItems.find(function(item) {
             return item.productId === productId;
@@ -135,7 +141,7 @@
                 var qty = parseInt(existingItem.qty);
                 // Jika produk sudah ada, tambahkan 1 ke jumlahnya
                 existingItem.qty = qty + 1;
-            
+
         alert('Jumlah item = '+existingItem.qty);
         } else {
             // Jika item belum ada, tambahkan item baru ke keranjang
@@ -146,7 +152,7 @@
             qty: 1
             };
             cartItems.push(newItem);
-            
+
         alert('Produk berhasil ditambahkan ke keranjang.');
         }
 
@@ -192,17 +198,17 @@
         console.log('Jumlah data dalam localStorage: ' + itemCount);
 
         $("#nilai").text(itemCount);
-        
+
        function addcart(){
         alert('active');
        }
-    
+
     // Fungsi untuk mendapatkan daftar produk di keranjang
     function getCartItems() {
         // Ambil data keranjang dari localStorage
         var cartItems = localStorage.getItem('cartItems');
         cartItems = cartItems ? JSON.parse(cartItems) : [];
-       
+
         // Lakukan manipulasi DOM atau tindakan lainnya untuk menampilkan daftar produk di keranjang
         console.log('Daftar produk di keranjang:', cartItems);
 
@@ -211,10 +217,10 @@
     // Panggil fungsi getCartItems saat halaman dimuat
     getCartItems();
     // Fungsi untuk menambahkan produk ke keranjang
-    
+
 
     });
-    
+
 
     $('.category').change(function() {
         var nilaiInput = $(this).val();
@@ -244,7 +250,7 @@
         }
     });
 
-    
+
     // $('#btnRedirect').click(function() {
     //         $.ajax({
     //             url: "{{ route('cart',['table'=>$meja,'cust'=>$cust]) }}", // Ganti dengan URL tujuan Anda
@@ -266,13 +272,13 @@
           -webkit-animation: spin 2s linear infinite; /* Safari */
           animation: spin 2s linear infinite;
         }
-        
+
         /* Safari */
         @-webkit-keyframes spin {
           0% { -webkit-transform: rotate(0deg); }
           100% { -webkit-transform: rotate(360deg); }
         }
-        
+
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
