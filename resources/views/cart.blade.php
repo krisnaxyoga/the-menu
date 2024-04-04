@@ -98,33 +98,40 @@
         // Lakukan manipulasi DOM atau tindakan lainnya untuk menampilkan daftar produk di keranjang
         console.log('Daftar produk di keranjang:', cartItems);
         updateCartView(cartItems);
-    // Fungsi untuk menambahkan produk ke keranjang
-   
-    $('.remove-from-cart').off('click').on('click', function() {
-        var productId = $(this).data('id');
-        console.log(productId,"produk id<<<<<<<<<<<<<<<<")
-        // alert(productId)
-        // Ambil data keranjang dari localStorage
-        var cartItems = localStorage.getItem('cartItems');
-        cartItems = cartItems ? JSON.parse(cartItems) : [];
+        // Fungsi untuk menambahkan produk ke keranjang
+      
+        $('.remove-from-cart').off('click').on('click', function() {
+            var nilaiInput = 0;
+                var productId = $(this).data('id');
+                
+                // Ambil data keranjang dari localStorage
+                var cartItems = localStorage.getItem('cartItems');
+                cartItems = cartItems ? JSON.parse(cartItems) : [];
 
-        // Menghapus semua item dengan productId yang sama
-        cartItems = cartItems.filter(function(item) {
-        return item.productId !== productId; // Ganti dengan kondisi yang sesuai untuk mencari item yang ingin dihapus
+                // Temukan item yang sesuai dengan productId
+                var existingItemIndex = cartItems.findIndex(function(item) {
+                    return item.productId == productId;
+                });
+
+                if (existingItemIndex !== -1) {
+                    if (parseInt(nilaiInput) == 0) {
+                        // Jika kuantitas diubah menjadi 0, hapus item dari keranjang
+                        cartItems.splice(existingItemIndex, 1);
+                        console.log('Produk berhasil dihapus dari keranjang karena kuantitas menjadi 0.');
+                    } 
+                    // Simpan kembali data keranjang ke localStorage
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+                    // Perbarui tampilan keranjang
+                    updateCartView(cartItems);
+                    window.location.reload();
+                    console.log('Kuantitas produk berhasil diperbarui dalam keranjang.');
+                    
+                } else {
+                    console.log('Item dengan ID yang sesuai tidak ditemukan dalam keranjang.');
+                }
         });
 
-        // Simpan kembali data keranjang ke localStorage
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        var itemCount = countLocalStorageItems();
-        console.log('Jumlah data dalam localStorage: ' + itemCount);
-
-        $("#nilai").text(itemCount);
-        updateCartView(cartItems);
-        window.location.reload();
-        console.log('Produk berhasil dihapus dari keranjang.');
-        // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
-    });
-     
     $('#checkout').off('click').on('click', function() {
         // alert("chekout")
         var meja = $(this).data('meja');
@@ -157,35 +164,45 @@
         });
         alert("order berhasil, mohon tunggu sebentar kami siapkan pesanan anda");
     });
-    $('.qty').change(function() {
-        var nilaiInput = $(this).val();
-        console.log('Nilai input telah berubah:', nilaiInput);
-        var productId = $(this).data('id');
-        console.log(productId,"on change<<<<<<<<<<<<<<<<")
-        // alert(productId)
-        // Ambil data keranjang dari localStorage
-        var cartItems = localStorage.getItem('cartItems');
-        cartItems = cartItems ? JSON.parse(cartItems) : [];
+        $('.qty').change(function() {
+                var nilaiInput = $(this).val();
+                var productId = $(this).data('id');
+                
+                // Ambil data keranjang dari localStorage
+                var cartItems = localStorage.getItem('cartItems');
+                cartItems = cartItems ? JSON.parse(cartItems) : [];
 
-        var existingItem = cartItems.find(function(item) {
-            return item.productId === productId;
-        });
+                // Temukan item yang sesuai dengan productId
+                var existingItemIndex = cartItems.findIndex(function(item) {
+                    return item.productId == productId;
+                });
 
-        if (existingItem) {
-            // Jika item sudah ada, tambahkan kuantitasnya
-            existingItem.qty = nilaiInput;
-        }
-        // Simpan kembali data keranjang ke localStorage
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        var itemCount = countLocalStorageItems();
-        console.log('Jumlah data dalam localStorage: ' + itemCount);
+                if (existingItemIndex !== -1) {
+                    if (parseInt(nilaiInput) == 0) {
+                        // Jika kuantitas diubah menjadi 0, hapus item dari keranjang
+                        cartItems.splice(existingItemIndex, 1);
+                        console.log('Produk berhasil dihapus dari keranjang karena kuantitas menjadi 0.');
+                    } else {
+                        // Jika item ditemukan, perbarui kuantitasnya
+                        cartItems[existingItemIndex].qty = parseInt(nilaiInput); // Ubah nilaiInput menjadi bilangan bulat
+                        console.log('Kuantitas produk berhasil diperbarui dalam keranjang.');
+                    }
+                    // Jika item ditemukan, perbarui kuantitasnya
+                    // cartItems[existingItemIndex].qty = parseInt(nilaiInput); // Ubah nilaiInput menjadi bilangan bulat
 
-        $("#nilai").text(itemCount);
-        window.location.reload();
-        console.log('Produk berhasil dihapus dari keranjang.');
-        // Lakukan manipulasi DOM atau tindakan lainnya jika diperlukan
-    });
+                    // Simpan kembali data keranjang ke localStorage
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
+                    // Perbarui tampilan keranjang
+                    updateCartView(cartItems);
+
+                    window.location.reload();
+                    console.log('Kuantitas produk berhasil diperbarui dalam keranjang.');
+                    
+                } else {
+                    console.log('Item dengan ID yang sesuai tidak ditemukan dalam keranjang.');
+                }
+            });
    
             // Memperbarui tampilan keranjang
             function updateCartView(cart) {
@@ -208,15 +225,21 @@
                     var card = '<a class="btn btn-success mb-5" href="{{ route('menu.food',['table'=>$meja,'cust'=>$cust]) }}">Ayo Order Dulu!!! </a>'
                     $("#cart-items").after(card);
                 }else{
-                    var button = '<button class="btn btn-primary mb-5" data-meja="{{ $meja }}" data-cust="{{ $cust }}" id="checkout">CHECKOUT</button>';
-             
-                    $("#cart-items").after(button);
+                  
+                    if ($("#checkout").length === 0 && itemCount > 0) {
+                        var button = '<button class="btn btn-primary mb-5" data-meja="{{ $meja }}" data-cust="{{ $cust }}" id="checkout">CHECKOUT</button>';
+                        $("#cart-items").after(button);
+                    } else if (itemCount === 0) {
+                        var card = '<a class="btn btn-success mb-5" href="{{ route('menu.food',['table'=>$meja,'cust'=>$cust]) }}">Ayo Order Dulu!!! </a>';
+                        $("#cart-items").after(card);
+                    }
                 }
 
 
             }
         });
 
+       
         $('#btnRedirect').click(function() {
             $.ajax({
                 url: "{{ route('cart',['table'=>$meja,'cust'=>$cust]) }}", // Ganti dengan URL tujuan Anda
