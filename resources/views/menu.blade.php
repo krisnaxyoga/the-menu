@@ -3,25 +3,29 @@
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <section>
-    <div class="container">
-                <div class="card o-hidden border-0 shadow-lg my-5">
+    <div>
+                <div class="card o-hidden border-0 shadow-lg my-5" style="border-radius: 30px">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div>
-                                    <a class="btn btn-info position-relative" id="btnRedirect" href="{{ route('cart',['table'=>$meja,'cust'=>$cust]) }}" >
-                                    <i class="fas fa-shopping-cart fa-fw"></i>
-                                    <!-- Counter - Messages -->
-                                    <span style="left: 43px;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="nilai">
-                                        {{-- <span ></span> --}}
-                                      </span>
-                                </a>
+                                    <div class="d-flex justify-content-center mt-2">
+                                        <a class="btn btn-info position-relative" id="btnRedirect" href="{{ route('cart',['table'=>$meja,'cust'=>$cust]) }}" >
+                                            <i class="fas fa-shopping-cart fa-fw"></i>
+                                            <!-- Counter - Messages -->
+                                            <span style="left: 43px;" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="nilai">
+                                                {{-- <span ></span> --}}
+                                            </span>
+                                        </a>
+                                    </div>
+                                   
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 mt-3">Welcome The Menu</h1>
                                         @if (session()->has('message'))
                                         <div class="alert alert-primary alert-dismissible fade show" role="alert">
                                             {{ session('message') }}
+                                            <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"> x</button>
                                         </div>
                                     @endif
                                     </div>
@@ -44,8 +48,8 @@
                                         </div>
                                         <div class="row justify-content-center" id="products">
                                             @foreach ($data as $item)
-                                                <div class="col-lg-4 col-md-6 col-12 mb-5">
-                                                    <div class="card">
+                                                <div class="col-lg-3 col-md-6 col-6 mb-5">
+                                                    <div class="card border-0 shadow" style="border-radius: 15px;">
                                                         <img class="card-img-top object-fit-cover height-13rem" src="{{$item->image_url}}" alt="{{$item->image_url}}">
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{$item->name}}</h5>
@@ -86,7 +90,7 @@
                              
     </div>
    <!-- Bottom Navbar -->
-<nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
+{{-- <nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
     <ul class="navbar-nav nav-justified w-100">
         <li class="nav-item">
             <a href="{{ route('menu.food',['table'=>$meja,'cust'=>$cust]) }}" class="nav-link text-center text-secondary">
@@ -107,7 +111,7 @@
             </a>
         </li>
     </ul>
-</nav>
+</nav> --}}
 </section>
 <script>
     $(document).ready(function() {

@@ -61,29 +61,7 @@
                 </div>
                              
     </div>
-   <!-- Bottom Navbar -->
-<nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
-    <ul class="navbar-nav nav-justified w-100">
-        <li class="nav-item">
-            <a href="{{ route('menu.food',['table'=>$meja,'cust'=>$cust]) }}" class="nav-link text-center text-secondary">
-                <i class="fa fa-home"></i>
-                <span class="small d-block">Home</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('cart',['table'=>$meja,'cust'=>$cust]) }}" class="nav-link text-center text-secondary">
-                <i class="fa fa-shopping-cart"></i>
-                <span class="small d-block">Cart</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{route('orderlist',['table'=>$meja,'cust'=>$cust])}}" class="nav-link text-center text-secondary">
-                <i class="fa fa-book" aria-hidden="true"></i>
-                <span class="small d-block">Order list</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+  
 </section>
     
 @endsection

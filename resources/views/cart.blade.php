@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div>
-                                    <a class="btn btn-warning" href="{{ route('menu.food',['table'=>$meja,'cust'=>$cust]) }}" >
+                                    <a class="btn btn-primary" href="{{ route('menu.food',['table'=>$meja,'cust'=>$cust]) }}" >
                                     <i class="fas fa-undo fa-fw"></i>
                                     <!-- Counter - Messages --> Back
                                 </a>
@@ -37,7 +37,7 @@
                              
     </div>
      <!-- Bottom Navbar -->
-<nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
+{{-- <nav style="height: 62px;border-radius: 26px;" class="navbar navbar-dark bg-light shadow navbar-expand fixed-bottom">
     <ul class="navbar-nav nav-justified w-100">
         <li class="nav-item">
             <a href="{{ route('menu.food',['table'=>$meja,'cust'=>$cust]) }}" class="nav-link text-center text-secondary">
@@ -58,7 +58,7 @@
             </a>
         </li>
     </ul>
-</nav>
+</nav> --}}
 </section>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 <script>
